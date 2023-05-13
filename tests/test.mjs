@@ -94,7 +94,7 @@ before('test setup', async (t) => {
 });
 
 test('test injection of all stylesheets in directory', async (t) => {
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -c ${tmpDir}`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -c ${tmpDir}`);
   const content = await fs.readFile(outputFile, 'utf-8');
   for (const file of cssFiles) {
     t.equal(content.includes(`${tmpDir}/${file}`), true, `expect ${file} to be injected`);
@@ -103,7 +103,7 @@ test('test injection of all stylesheets in directory', async (t) => {
 });
 
 test('test injection of all javascripts in directory', async (t) => {
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -j ${tmpDir}`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -j ${tmpDir}`);
   const content = await fs.readFile(outputFile, 'utf-8');
   for (const file of jsFiles) {
     t.equal(content.includes(`${tmpDir}/${file}`), true, `expect ${file} to be injected`);
@@ -113,7 +113,7 @@ test('test injection of all javascripts in directory', async (t) => {
 
 test('test injection of single stylesheet', async (t) => {
   const cssFile = cssFiles[0];
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -c ${tmpDir}/${cssFile}`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -c ${tmpDir}/${cssFile}`);
   const content = await fs.readFile(outputFile, 'utf-8');
   t.equal(content.includes(`${tmpDir}/${cssFile}`), true, `expect ${cssFile} to be injected`);
   t.end();
@@ -121,14 +121,14 @@ test('test injection of single stylesheet', async (t) => {
 
 test('test injection of single javascript', async (t) => {
   const jsFile = jsFiles[0];
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -j ${tmpDir}/${jsFile}`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -j ${tmpDir}/${jsFile}`);
   const content = await fs.readFile(outputFile, 'utf-8');
   t.equal(content.includes(`${tmpDir}/${jsFile}`), true, `expect ${jsFile} to be injected`);
   t.end();
 });
 
 test('test injection of stylesheets with wildcard', async (t) => {
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -c '${cssFilesWildcard}'`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -c '${cssFilesWildcard}'`);
   const content = await fs.readFile(outputFile, 'utf-8');
   for (const file of cssFiles) {
     t.equal(content.includes(`${tmpDir}/${file}`), true, `expect ${file} to be injected`);
@@ -137,7 +137,7 @@ test('test injection of stylesheets with wildcard', async (t) => {
 });
 
 test('test injection of javascripts with wildcard', async (t) => {
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -j '${jsFilesWildcard}'`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -j '${jsFilesWildcard}'`);
   const data = await fs.readFile(outputFile, 'utf-8');
   for (const file of jsFiles) {
     t.equal(data.includes(`${tmpDir}/${file}`), true, `expect ${file} to be injected`);
@@ -147,7 +147,7 @@ test('test injection of javascripts with wildcard', async (t) => {
 
 test('test injection of stylesheets with inline option', async (t) => {
   const cssFile = cssFiles[0];
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -c ${tmpDir}/${cssFile} -I`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -c ${tmpDir}/${cssFile} -I`);
   const content = await fs.readFile(outputFile, 'utf-8');
   const actual = `
             body {
@@ -161,7 +161,7 @@ test('test injection of stylesheets with inline option', async (t) => {
 
 test('test injection of javascripts with inline option', async (t) => {
   const jsFile = jsFiles[0];
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -c ${tmpDir}/${jsFile} -I`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -c ${tmpDir}/${jsFile} -I`);
   const content = await fs.readFile(outputFile, 'utf-8');
   const actual = `
             console.log('${jsFile}');
@@ -171,7 +171,7 @@ test('test injection of javascripts with inline option', async (t) => {
 });
 
 test('test injection of all stylesheets in directory with ignore', async (t) => {
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -c ${tmpDir} -g ${tmpDir}/`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -c ${tmpDir} -g ${tmpDir}/`);
   const content = await fs.readFile(outputFile, 'utf-8');
   for (const file of cssFiles) {
     t.equal(content.includes(`\"${file}\"`), true, `expect ${file} to be injected`);
@@ -180,7 +180,7 @@ test('test injection of all stylesheets in directory with ignore', async (t) => 
 });
 
 test('test injection of all javascripts in directory with ignore', async (t) => {
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -j ${tmpDir} -g ${tmpDir}/`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -j ${tmpDir} -g ${tmpDir}/`);
   const content = await fs.readFile(outputFile, 'utf-8');
   for (const file of jsFiles) {
     t.equal(content.includes(`\"${file}\"`), true, `expect ${file} to be injected`);
@@ -190,7 +190,7 @@ test('test injection of all javascripts in directory with ignore', async (t) => 
 
 test('test injection of single stylesheet with ignore', async (t) => {
   const cssFile = cssFiles[0];
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -c ${tmpDir}/${cssFile} -g ${tmpDir}/`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -c ${tmpDir}/${cssFile} -g ${tmpDir}/`);
   const content = await fs.readFile(outputFile, 'utf-8');
   t.equal(content.includes(`\"${cssFile}\"`), true, `expect ${cssFile} to be injected`);
   t.end();
@@ -198,14 +198,14 @@ test('test injection of single stylesheet with ignore', async (t) => {
 
 test('test injection of single javascript with ignore', async (t) => {
   const jsFile = jsFiles[0];
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -j ${tmpDir}/${jsFile} -g ${tmpDir}/`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -j ${tmpDir}/${jsFile} -g ${tmpDir}/`);
   const content = await fs.readFile(outputFile, 'utf-8');
   t.equal(content.includes(`\"${jsFile}\"`), true, `expect ${jsFile} to be injected`);
   t.end();
 });
 
 test('test injection of stylesheets with wildcard with ignore', async (t) => {
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -c '${cssFilesWildcard}' -g ${tmpDir}/`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -c '${cssFilesWildcard}' -g ${tmpDir}/`);
   const content = await fs.readFile(outputFile, 'utf-8');
   for (const file of cssFiles) {
     t.equal(content.includes(`\"${file}\"`), true, `expect ${file} to be injected`);
@@ -214,7 +214,7 @@ test('test injection of stylesheets with wildcard with ignore', async (t) => {
 });
 
 test('test injection of javascripts with wildcard with ignore', async (t) => {
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -j '${jsFilesWildcard}' -g ${tmpDir}/`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -j '${jsFilesWildcard}' -g ${tmpDir}/`);
   const content = await fs.readFile(outputFile, 'utf-8');
   for (const file of jsFiles) {
     t.equal(content.includes(`\"${file}\"`), true, `expect ${file} to be injected`);
@@ -223,7 +223,7 @@ test('test injection of javascripts with wildcard with ignore', async (t) => {
 });
 
 test('test removal of development code', async (t) => {
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -r development`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -r development`);
   const devRegex = new RegExp('(<!-- remove:development -->)([\\s\\S]*?)(<!-- endremove -->)');
   const prodRegex = new RegExp('(<!-- remove:production -->)([\\s\\S]*?)(<!-- endremove -->)');
   const content = await fs.readFile(outputFile, 'utf-8');
@@ -233,7 +233,7 @@ test('test removal of development code', async (t) => {
 });
 
 test('test removal of production code', async (t) => {
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -r production`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -r production`);
   const prodRegex = new RegExp('(<!-- remove:production -->)([\\s\\S]*?)(<!-- endremove -->)');
   const devRegex = new RegExp('(<!-- remove:development -->)([\\s\\S]*?)(<!-- endremove -->)');
 
@@ -244,7 +244,7 @@ test('test removal of production code', async (t) => {
 });
 
 test('test injection of git hash', async (t) => {
-  await exec(`node postbuild.mjs -i ${inputFile} -o ${outputFile} -H`);
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -H`);
   const content = await fs.readFile(outputFile, 'utf-8');
   t.equal(content.includes(revision), true, `expect git hash to be injected`);
   t.end();

@@ -1,16 +1,16 @@
 {
   "name": "@madogai/postbuild",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A command line utility to inject css and js files into an html file or to remove code based on conditions.",
   "bin": {
-    "postbuild": "./postbuild.mjs"
+    "postbuild": "bin/postbuild.cjs"
   },
   "type": "module",
   "scripts": {
     "test": "tape tests/*.mjs | faucet"
   },
   "files": [
-    "postbuild.mjs",
+    "bin",
     "LICENSE",
     "CHANGELOG.md",
     "readme.md"
