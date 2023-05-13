@@ -52,6 +52,7 @@ This way you can replace the regular files used in a development environment wit
     -g, --ignore <path>    Prefix to remove from the injected filenames
     -H, --hash             Inject git hash of current commit
     -e, --etag             Appends "?etag=fileHash" to every import (link, script) to avoid undesired caching in new deployments
+    -I, --inline           Inline the input(js and css) and embed it in html
 
 ### Examples
 
