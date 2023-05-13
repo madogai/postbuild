@@ -7,9 +7,13 @@
   },
   "type": "module",
   "scripts": {
-    "test": "tape tests/*.mjs | faucet",
-    "hoge": "node postbuild.mjs -i tests/tmp/index.html -o tests/tmp/output.html -c '**/*.css'"
+    "test": "tape tests/*.mjs | faucet"
   },
+  "files": [
+    "postbuild.mjs",
+    "LICENSE",
+    "readme.md"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/madogai/postbuild.git"
