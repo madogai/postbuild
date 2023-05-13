@@ -18,15 +18,14 @@
     "type": "git",
     "url": "https://github.com/madogai/postbuild.git"
   },
-  "author": "madogai",
+  "author": "Danny Moerkerke <danny@dannymoerkerke.nl>",
   "contributors": [
-    {
-      "name": "Danny Moerkerke",
-      "email": "danny@dannymoerkerke.nl"
-    },
     {
       "name": "Juan Grau",
       "email": "jbgraug@gmail.com"
+    },
+    {
+      "name": "madogai"
     }
   ],
   "license": "ISC",
