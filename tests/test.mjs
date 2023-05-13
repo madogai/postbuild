@@ -145,31 +145,6 @@ test('test injection of javascripts with wildcard', async (t) => {
   t.end();
 });
 
-test('test injection of stylesheets with inline option', async (t) => {
-  const cssFile = cssFiles[0];
-  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -c ${tmpDir}/${cssFile} -I`);
-  const content = await fs.readFile(outputFile, 'utf-8');
-  const actual = `
-            body {
-                padding: 0;
-                margin: 10px;
-            }
-  `.trim()
-  t.equal(content.includes(actual), true, `expect ${cssFile} to be injected`);
-  t.end();
-});
-
-test('test injection of javascripts with inline option', async (t) => {
-  const jsFile = jsFiles[0];
-  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -c ${tmpDir}/${jsFile} -I`);
-  const content = await fs.readFile(outputFile, 'utf-8');
-  const actual = `
-            console.log('${jsFile}');
-  `.trim()
-  t.equal(content.includes(actual), true, `expect ${jsFile} to be injected`);
-  t.end();
-});
-
 test('test injection of all stylesheets in directory with ignore', async (t) => {
   await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -c ${tmpDir} -g ${tmpDir}/`);
   const content = await fs.readFile(outputFile, 'utf-8');
@@ -221,6 +196,49 @@ test('test injection of javascripts with wildcard with ignore', async (t) => {
   }
   t.end();
 });
+
+test('test inline option', async (t) => {
+  const cssFile = cssFiles[0];
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -c ${tmpDir}/${cssFile} -I`);
+  const content = await fs.readFile(outputFile, 'utf-8');
+  const actual = `
+            body {
+                padding: 0;
+                margin: 10px;
+            }
+  `.trim()
+  t.equal(content.includes(actual), true, `expect ${cssFile} to be injected`);
+  t.end();
+});
+
+test('test inline option', async (t) => {
+  const jsFile = jsFiles[0];
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -c ${tmpDir}/${jsFile} -I`);
+  const content = await fs.readFile(outputFile, 'utf-8');
+  const actual = `
+            console.log('${jsFile}');
+  `.trim()
+  t.equal(content.includes(actual), true, `expect ${jsFile} to be injected`);
+  t.end();
+});
+
+test('test async option', async (t) => {
+  const jsFile = jsFiles[0];
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -j ${tmpDir}/${jsFile} -g ${tmpDir}/ -A -D`);
+  const content = await fs.readFile(outputFile, 'utf-8');
+  t.equal(content.includes(`<script src=\"${jsFile}\" async></script>`), true, `expect ${jsFile} to be injected`);
+  t.end();
+});
+
+test('test defer option', async (t) => {
+  const jsFile = jsFiles[0];
+  await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -j ${tmpDir}/${jsFile} -g ${tmpDir}/ -D`);
+  const content = await fs.readFile(outputFile, 'utf-8');
+  t.equal(content.includes(`<script src=\"${jsFile}\" defer></script>`), true, `expect ${jsFile} to be injected`);
+  t.end();
+});
+
+
 
 test('test removal of development code', async (t) => {
   await exec(`node bin/postbuild.cjs -i ${inputFile} -o ${outputFile} -r development`);

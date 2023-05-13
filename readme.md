@@ -53,6 +53,8 @@ This way you can replace the regular files used in a development environment wit
     -H, --hash             Inject git hash of current commit
     -e, --etag             Appends "?etag=fileHash" to every import (link, script) to avoid undesired caching in new deployments
     -I, --inline           Inline the input(js and css) and embed it in html
+    -A, --async            Add async attribute to script tags
+    -D, --defer            Add defer attribute to script tags
 
 ### Examples
 

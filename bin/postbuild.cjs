@@ -44,7 +44,7 @@ async function patternToFileNames(pattern, extension) {
   return [];
 }
 
-async function filePatternToScriptTags(pattern, { inline, ignore, etag }) {
+async function filePatternToScriptTags(pattern, { async, defer, inline, ignore, etag }) {
   const fileNames = await patternToFileNames(pattern, '.js');
   const tags = [];
   for (const fileName of fileNames) {
@@ -59,7 +59,13 @@ async function filePatternToScriptTags(pattern, { inline, ignore, etag }) {
       if (etag != null) {
         path = await appendETagSHAToFilename(path);
       }
-      tags.push(`<script src="${path}"></script>`);
+      const attributes = [`src="${path}"`];
+      if (async) {
+        attributes.push('async');
+      } else if (defer) {
+        attributes.push('defer');
+      }
+      tags.push(`<script ${attributes.join(' ')}></script>`);
     }
   }
   return tags;
@@ -107,6 +113,8 @@ async function filePatternToStyleTags(pattern, { inline, ignore, etag }) {
       'appends "?etag=fileHash" to every import (link, script) to avoid undesired caching in new deployments'
     )
     .option('-I, --inline', 'Inline the input(js and css) and embed it in html')
+    .option('-A, --async', 'Add async attribute to injected script tags')
+    .option('-D, --defer', 'Add defer attribute to injected script tags')
     .parse(process.argv)
     .opts();
 
@@ -132,8 +140,8 @@ async function filePatternToStyleTags(pattern, { inline, ignore, etag }) {
   let jsFiles = [];
   if (options.js) {
     try {
-      const { inline, ignore, etag } = options;
-      jsFiles = await filePatternToScriptTags(options.js, { inline, ignore, etag });
+      const { async, defer, inline, ignore, etag } = options;
+      jsFiles = await filePatternToScriptTags(options.js, { async, defer, inline, ignore, etag });
     } catch (e) {
       handleError(`File or folder '${js}' not found`);
     }
