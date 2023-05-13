@@ -12,6 +12,7 @@
   "files": [
     "postbuild.mjs",
     "LICENSE",
+    "CHANGELOG.md",
     "readme.md"
   ],
   "repository": {
