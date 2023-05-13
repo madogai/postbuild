@@ -143,7 +143,7 @@ async function filePatternToStyleTags(pattern, { inline, ignore, etag }) {
       const { async, defer, inline, ignore, etag } = options;
       jsFiles = await filePatternToScriptTags(options.js, { async, defer, inline, ignore, etag });
     } catch (e) {
-      handleError(`File or folder '${js}' not found`);
+      handleError(`File or folder '${options.js}' not found`);
     }
   }
 
@@ -153,7 +153,7 @@ async function filePatternToStyleTags(pattern, { inline, ignore, etag }) {
       const { inline, ignore, etag } = options;
       cssFiles = await filePatternToStyleTags(options.css, { inline, ignore, etag });
     } catch (e) {
-      handleError(`File or folder '${css}' not found`);
+      handleError(`File or folder '${options.css}' not found`);
     }
   }
 

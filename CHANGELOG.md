@@ -1,5 +1,9 @@
 # Changelog
 
+### [3.1.1](https://github.com/madogai/postbuild/compare/v3.1.0...v3.1.1) (2023-05-13)
+
+* Fixed minor bug.
+
 ### [3.1.0](https://github.com/madogai/postbuild/compare/v3.0.1...v3.1.0) (2023-05-13)
 
 * Added `--async` `--defer` options.

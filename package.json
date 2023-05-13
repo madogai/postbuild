@@ -1,6 +1,6 @@
 {
   "name": "@madogai/postbuild",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "A command line utility to inject css and js files into an html file or to remove code based on conditions.",
   "bin": {
     "postbuild": "bin/postbuild.cjs"
