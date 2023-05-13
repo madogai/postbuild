@@ -1,33 +1,43 @@
 {
-  "name": "postbuild",
-  "version": "2.1.0",
+  "name": "@madogai/postbuild",
+  "version": "3.0.0",
   "description": "A command line utility to inject css and js files into an html file or to remove code based on conditions.",
-  "bin": "./postbuild",
+  "bin": {
+    "postbuild": "./postbuild.mjs"
+  },
+  "type": "module",
   "scripts": {
-    "test": "tape tests/*.js | faucet"
+    "test": "tape tests/*.mjs | faucet",
+    "hoge": "node postbuild.mjs -i tests/tmp/index.html -o tests/tmp/output.html -c '**/*.css'"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:jbgraug/postbuild.git"
+    "url": "https://github.com/madogai/postbuild.git"
   },
-  "author": "Danny Moerkerke <danny@dannymoerkerke.nl>",
+  "author": "madogai",
   "contributors": [
-    { 
-      "name" : "Juan Grau", 
-      "email" : "jbgraug@gmail.com"
+    {
+      "name": "Danny Moerkerke",
+      "email": "danny@dannymoerkerke.nl"
+    },
+    {
+      "name": "Juan Grau",
+      "email": "jbgraug@gmail.com"
     }
   ],
   "license": "ISC",
   "dependencies": {
-    "commander": "^2.9.0",
-    "replacestream": "^4.0.0",
-    "glob": "^7.0.0"
+    "commander": "10.0.1",
+    "glob": "10.2.3",
+    "replacestream": "4.0.3"
   },
   "devDependencies": {
-    "faucet": "0.0.1",
-    "tape": "^4.5.1"
+    "faucet": "0.0.4",
+    "prettier": "2.8.8",
+    "rimraf": "5.0.0",
+    "tape": "5.6.3"
   },
-  "engines":{
-    "node" : ">=4.0.0"
+  "engines": {
+    "node": ">=16.0.0"
   }
 }
