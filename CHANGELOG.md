@@ -1,5 +1,9 @@
 # Changelog
 
+### [4.0.0](https://github.com/madogai/postbuild/compare/v3.1.1...v4.0.0) (2026-01-10)
+
+* Update dependencies.
+
 ### [3.1.1](https://github.com/madogai/postbuild/compare/v3.1.0...v3.1.1) (2023-05-13)
 
 * Fixed minor bug.

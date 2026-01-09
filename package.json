@@ -31,17 +31,17 @@
   ],
   "license": "ISC",
   "dependencies": {
-    "commander": "10.0.1",
-    "glob": "10.2.3",
+    "commander": "14.0.2",
+    "glob": "13.0.0",
     "replacestream": "4.0.3"
   },
   "devDependencies": {
-    "faucet": "0.0.4",
-    "prettier": "2.8.8",
-    "rimraf": "5.0.0",
-    "tape": "5.6.3"
+    "faucet": " 0.0.4",
+    "prettier": "3.7.4",
+    "rimraf": "6.1.2",
+    "tape": "5.9.0"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=20.0.0"
   }
 }
