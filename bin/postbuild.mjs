@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
-const { promisify } = require('node:util');
-const cp = require('node:child_process');
-const fs = require('node:fs');
-const fsPromise = require('node:fs/promises');
-const path = require('node:path/posix');
-const crypto = require('node:crypto');
-const { glob, hasMagic } = require('glob');
-const replaceStream = require('replacestream');
-const { program } = require('commander');
+import { promisify} from 'node:util';
+import cp from 'node:child_process';
+import fs from 'fs';
+import fsPromise from 'node:fs/promises';
+import path from 'node:path/posix';
+import crypto from 'node:crypto';
+import { glob, hasMagic } from 'glob';
+import replaceStream from 'replacestream';
+import { program } from 'commander';
 
 function handleError(message) {
   console.error(message);
