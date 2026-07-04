@@ -238,7 +238,13 @@ test('test defer option', async (t) => {
   t.end();
 });
 
-
+test('test module option', async (t) => {
+  const jsFile = jsFiles[0];
+  await exec(`node bin/postbuild.mjs -i ${inputFile} -o ${outputFile} -j ${tmpDir}/${jsFile} -g ${tmpDir}/ -M`);
+  const content = await fs.readFile(outputFile, 'utf-8');
+  t.equal(content.includes(`<script src=\"${jsFile}\" type="module"></script>`), true, `expect ${jsFile} to be injected`);
+  t.end();
+})
 
 test('test removal of development code', async (t) => {
   await exec(`node bin/postbuild.mjs -i ${inputFile} -o ${outputFile} -r development`);

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { promisify} from 'node:util';
+import { promisify } from 'node:util';
 import cp from 'node:child_process';
 import fs from 'fs';
 import fsPromise from 'node:fs/promises';
@@ -44,7 +44,7 @@ async function patternToFileNames(pattern, extension) {
   return [];
 }
 
-async function filePatternToScriptTags(pattern, { async, defer, inline, ignore, etag }) {
+async function filePatternToScriptTags(pattern, { async, defer, module, inline, ignore, etag }) {
   const fileNames = await patternToFileNames(pattern, '.js');
   const tags = [];
   for (const fileName of fileNames) {
@@ -64,6 +64,9 @@ async function filePatternToScriptTags(pattern, { async, defer, inline, ignore, 
         attributes.push('async');
       } else if (defer) {
         attributes.push('defer');
+      }
+      if (module) {
+        attributes.push('type="module"');
       }
       tags.push(`<script ${attributes.join(' ')}></script>`);
     }
@@ -99,22 +102,23 @@ async function filePatternToStyleTags(pattern, { inline, ignore, etag }) {
     .option('-o, --output <output>', 'Output file (defaults to input when omitted)')
     .option(
       '-c, --css <css>',
-      "css file(s) to inject (file or directory). Wildcards can be used with quotation: '**/*.css'"
+      "css file(s) to inject (file or directory). Wildcards can be used with quotation: '**/*.css'",
     )
     .option(
       '-j, --js <js>',
-      "js file(s) to inject (file or directory). Wildcards can be used with quotation: '**/*.js'"
+      "js file(s) to inject (file or directory). Wildcards can be used with quotation: '**/*.js'",
     )
     .option('-r, --remove <remove>', 'Remove condition')
     .option('-g, --ignore <path>', 'Prefix to remove from the injected filenames')
     .option('-H, --hash', 'Inject git hash of current commit')
     .option(
       '-e, --etag',
-      'appends "?etag=fileHash" to every import (link, script) to avoid undesired caching in new deployments'
+      'appends "?etag=fileHash" to every import (link, script) to avoid undesired caching in new deployments',
     )
     .option('-I, --inline', 'Inline the input(js and css) and embed it in html')
     .option('-A, --async', 'Add async attribute to injected script tags')
     .option('-D, --defer', 'Add defer attribute to injected script tags')
+    .option('-M, --module', 'Add type="module" attribute to script tags')
     .parse(process.argv)
     .opts();
 
@@ -140,8 +144,8 @@ async function filePatternToStyleTags(pattern, { inline, ignore, etag }) {
   let jsFiles = [];
   if (options.js) {
     try {
-      const { async, defer, inline, ignore, etag } = options;
-      jsFiles = await filePatternToScriptTags(options.js, { async, defer, inline, ignore, etag });
+      const { async, defer, module, inline, ignore, etag } = options;
+      jsFiles = await filePatternToScriptTags(options.js, { async, defer, module, inline, ignore, etag });
     } catch (e) {
       handleError(`File or folder '${options.js}' not found`);
     }
@@ -171,12 +175,12 @@ async function filePatternToStyleTags(pattern, { inline, ignore, etag }) {
     .pipe(
       replaceStream(/(<!-- inject:js -->)([\s\S]*?)(<!-- endinject -->)/gm, ($0) => {
         return jsFiles.length > 0 ? jsFiles.join('\n') : $0;
-      })
+      }),
     )
     .pipe(
       replaceStream(/(<!-- inject:css -->)([\s\S]*?)(<!-- endinject -->)/gm, ($0) => {
         return cssFiles.length > 0 ? cssFiles.join('\n') : $0;
-      })
+      }),
     )
     .pipe(replaceStream(/(<!-- inject:git-hash -->)/gm, `<!-- ${revision} -->`))
     .pipe(replaceStream(new RegExp(`(<!-- remove:${removeCondition} -->)([\\s\\S]*?)(<!-- endremove -->)`, 'gm'), ''))

@@ -55,6 +55,7 @@ This way you can replace the regular files used in a development environment wit
     -I, --inline           Inline the input(js and css) and embed it in html
     -A, --async            Add async attribute to script tags
     -D, --defer            Add defer attribute to script tags
+    -M, --module           Add type="module" attribute to script tags
 
 ### Examples
 
