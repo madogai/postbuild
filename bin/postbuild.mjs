@@ -50,7 +50,11 @@ async function filePatternToScriptTags(pattern, { async, defer, module, inline, 
   for (const fileName of fileNames) {
     if (inline) {
       const content = await fsPromise.readFile(fileName, 'utf-8');
-      tags.push(`<script>${content}</script>`);
+      if (module) {
+        tags.push(`<script type="module">${content}</script>`);
+      } else {
+        tags.push(`<script>${content}</script>`);
+      }
     } else {
       let path = fileName;
       if (typeof ignore === 'string') {
