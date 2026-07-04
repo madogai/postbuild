@@ -7,7 +7,7 @@ It removes code between markers so you can for example remove livereload code wh
 It can also inject the current git commit hash into the HTML as a comment so it is easily visible which commit is currently 
 deployed.
 
-**This module was written in ES6 and requires node >= 4.0.0.**
+**This module was written in ES6 and requires node >= 20.0.0.**
 
 ## Usage
 Place the markers in your html file to inject or remove code:

@@ -1,5 +1,9 @@
 # Changelog
 
+### [4.1.0](https://github.com/madogai/postbuild/compare/v4.0.0...v4.1.0) (2026-07-4)
+
+* Added `--module` options.
+
 ### [4.0.0](https://github.com/madogai/postbuild/compare/v3.1.1...v4.0.0) (2026-01-10)
 
 * Update dependencies.
