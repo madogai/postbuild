@@ -1,6 +1,10 @@
 # Changelog
 
-### [4.1.1](https://github.com/madogai/postbuild/compare/v4.0.0...v4.1.1) (2026-07-4)
+### [4.1.2](https://github.com/madogai/postbuild/compare/v4.1.1...v4.1.2) (2026-07-4)
+
+* Fixed an issue where module options were not applied inline.
+
+### [4.1.1](https://github.com/madogai/postbuild/compare/v4.1.0...v4.1.1) (2026-07-4)
 
 * Fixed minor bug.
 
